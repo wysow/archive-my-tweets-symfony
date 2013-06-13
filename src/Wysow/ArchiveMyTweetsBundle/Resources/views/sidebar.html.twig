@@ -1,0 +1,61 @@
+{% set currentPath = path(app.request.attributes.get('_route'), 
+        app.request.attributes.get('_route_params')) %}
+<div id="sidebar">
+
+	<div id="archive" class="widget rounded">
+		<ul class="links">
+			<li class="all-tweets {% if currentPath == path('wysow_archivemytweets_default_index') %}here{% endif %}">
+				<a href="{{ path('wysow_archivemytweets_default_index') }}">
+					<span class="month">All Tweets</span>
+					<span class="total">{{ total }}</span>
+					<span class="bar"></span>
+				</a>
+			</li>
+			<li class="{% if currentPath == path('wysow_archivemytweets_default_favorites') %}here{% endif %}">
+				<a href="{{ path('wysow_archivemytweets_default_favorites') }}">
+					<span class="month">Favorites</span>
+					<span class="total">{{ totalFavorited }}</span>
+					<span class="bar"></span>
+				</a>
+			</li>
+			{% if tweetsByMonths %}
+				{% for tweetsByMonth in tweetsByMonths %}
+					{% set bgPercent = (tweetsByMonth.total / total * 100)|number_format(2) %}
+					{% set date = tweetsByMonth.y~'-'~tweetsByMonth.m~'-01' %}
+				    <li class="{% if currentPath == path('wysow_archivemytweets_default_archive', {'year': tweetsByMonth.y, 'month': tweetsByMonth.m}) %}here{% endif %}">
+				    	<a href="{{ path('wysow_archivemytweets_default_archive', {'year': tweetsByMonth.y, 'month': tweetsByMonth.m}) }}">
+				    		<span class="month">{{ date|date('F Y') }}</span>
+				    		<span class="total">{{ tweetsByMonth.total }}</span>
+				    		<span class="bar" style="width:{{ bgPercent }}%"></span>
+				    	</a>
+				    </li>
+				{% endfor %}
+			{% else %}
+				<li>No monthly data.</li>
+			{% endif %}
+		</ul>
+	</div><!-- /archive -->
+
+	<div id="sources" class="widget rounded">
+		<h3>Clients <div class="pull-right muted">{{ totalClients }}</div></h3>
+
+		<ul class="links">
+			{% if clients %}
+				{% for client in clients %}
+				    {% set clientName = client.source|striptags %}
+				    {% set bgPercent = (client.total / total * 100)|number_format(2) %}
+				    <li class="">
+				    	<a href="">
+				    		<span class="month">{{ clientName }}</span>
+				    		<span class="total">{{ client.total }}</span>
+				    		<span class="bar" style="width:{{ bgPercent }}%"></span>
+				    	</a>
+				    </li>
+				{% endfor %}
+			{% else %}
+				<li>No clients.</li>	    
+			{% endif %}
+		</ul>
+	</div><!-- /sources -->
+
+</div><!-- /sidebar -->

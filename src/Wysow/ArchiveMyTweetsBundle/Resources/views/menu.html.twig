@@ -1,0 +1,15 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="brand avatar" href="{{ path('wysow_archivemytweets_default_index') }}"><img src="{{ gravatarEmail|getGravatarImage }}"></a>
+			<ul id="primary-nav" class="nav">
+				<li><a class="brand" href="{{ path('wysow_archivemytweets_default_index') }}">@{{ twitter.username }}</a></li>
+			</ul>
+			<ul id="search-nav" class="nav pull-right">
+				<form action="{{ path('wysow_archivemytweets_default_index') }}" class="navbar-search pull-right" method="get">
+					<input type="text" size="20" name="q" value="{% if searchTerm %}{{ searchTerm }}{% endif %}" class="span3 search-query" placeholder="Search my tweets" />
+				</form>
+			</ul>
+		</div>
+	</div>
+</div>

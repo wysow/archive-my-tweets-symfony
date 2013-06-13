@@ -1,0 +1,57 @@
+{% extends 'WysowArchiveMyTweetsBundle::layout.html.twig' %}
+{% block title %}@{{ twitter.username }} {{ twitter.name }} - Tweets{% endblock %}
+
+{% block body %}
+<body class="amt-recent">
+
+	{% include 'WysowArchiveMyTweetsBundle::menu.html.twig' with { 'searchTerm': searchTerm, 'gravatarEmail': gravatarEmail } %}
+
+	<div class="container">
+		<div class="row">
+			<div class="span8">
+				<div id="tweets" class="rounded">
+					<div class="page-header"><h1>Recent Tweets</h1></div>
+
+					{% if tweets %}
+
+					{% for tweet in tweets %}
+						<div class="tweet {% if tweet.inReplyToStatusId %}reply{% endif %} {% if tweet.truncated %}truncated{% endif %}">
+							<p class="message">
+								{% if tweet.favorited %}
+									<span class="badge badge-warning"><i class="icon-star icon-white" title="Favorite"></i></span>
+								{% endif %}
+								{{ tweet.getLinkedTweet|raw }}
+							</p>
+							<p class="meta">
+								<a href="{{ path('wysow_archivemytweets_default_index') }}~{{ tweet.id }}" rel="bookmark">{{ tweet.createdAt|date('g:ia F jS Y') }}</a>
+								via
+								{{ tweet.source|raw }} {% if tweet.inReplyToStatusId %}<a href="http://twitter.com/~{{ tweet.inReplyToScreenName }}~/status/~{{ tweet.inReplyToStatusId }}">in reply to {{ tweet.inReplyToScreenName }}</a>{% endif %}
+							</p>
+						</div>
+					{% endfor %}
+
+						{#<?php if (isset($pagination)) { ?>
+						<div id="pagination"><?php echo $pagination; ?></div>
+						<?php } ?>#}
+
+					{% else %}
+						<p class="no-tweets lead">No tweets found!</p>
+					{% endif %}
+				</div><!-- /tweets -->
+			</div><!-- /span8 -->
+
+			<div class="span4">
+				{% include 'WysowArchiveMyTweetsBundle::sidebar.html.twig' with { 'total': total, 'totalFavorited': totalFavorited, 'tweetsByMonths': tweetsByMonths, 'totalClients': totalClients, 'clients': clients } %}
+			</div><!-- /.span4 -->
+
+<!-- /index -->
+
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+
+	<div class="footer" id="footer">
+		<div class="container">
+			<p><a href="http://amwhalen.com/projects/archive-my-tweets/">Archive My Tweets</a> by <a href="http://www.wysow.fr">Gaultier Boniface</a>, inspired by <a href="http://amwhalen.com">Andrew M. Whalen</a> Archive My Tweets version.</p>
+		</div><!-- /.container -->
+	</div><!-- /.footer -->
+{% endblock %}

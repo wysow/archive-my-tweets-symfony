@@ -1,0 +1,5 @@
+wysow_archive_my_tweets:
+    resource: "@WysowArchiveMyTweetsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

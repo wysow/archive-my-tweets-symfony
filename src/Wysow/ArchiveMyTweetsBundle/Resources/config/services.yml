@@ -1,0 +1,24 @@
+parameters:
+    gravatar_email: ~
+    twitter_username: ~
+    twitter_name: ~
+
+services:
+    wysow_archive_my_tweets.twitter.archiver:
+        class: Wysow\ArchiveMyTweetsBundle\Twitter\Archiver
+        arguments:
+            - new TijsVerkoyen\Twitter\Twitter
+            - %wysow_archive_my_tweets.twitter.username%
+
+    wysow_archive_my_tweets.twitter.twig.extension:
+        class: Wysow\ArchiveMyTweetsBundle\Extension\Twitter
+        arguments:
+            - %wysow_archive_my_tweets.twitter.username%
+            - %wysow_archive_my_tweets.twitter.name%
+        tags:
+            -  { name: twig.extension }
+
+    wysow_archive_my_tweets.gravatar.twig.extension:
+        class: Wysow\ArchiveMyTweetsBundle\Extension\Gravatar
+        tags:
+            -  { name: twig.extension }
