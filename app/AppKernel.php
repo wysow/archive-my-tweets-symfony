@@ -16,6 +16,15 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
+            /**
+             * Third party bundles
+             */
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+
+            /**
+             * Application bundle
+             */
             new Wysow\ArchiveMyTweetsBundle\WysowArchiveMyTweetsBundle(),
         );
 

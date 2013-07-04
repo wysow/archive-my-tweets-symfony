@@ -318,27 +318,27 @@ class Tweet
         // props to: http://davidwalsh.name/linkify-twitter-feed
 
         // linkify URLs
-        $status_text = preg_replace(
+        $statusText = preg_replace(
             '/(https?:\/\/\S+)/',
             '<a href="\1">\1</a>',
             $this->tweet
         );
 
         // linkify twitter users
-        $status_text = preg_replace(
+        $statusText = preg_replace(
             '/(^|\s)(@(\w+))/',
             '\1<a href="http://twitter.com/\3">\2</a>',
-            $status_text
+            $statusText
         );
 
         // linkify tags
-        $status_text = preg_replace(
+        $statusText = preg_replace(
             '/(^|\s)(#(\S+))/',
-            '\1<a href="http://search.twitter.com/search?q=%23\3">\2</a>',
-            $status_text
+            '\1<a href="http://twitter.com/search?q=%23\3">\2</a>',
+            $statusText
         );
 
-        return $status_text;
+        return $statusText;
     }
 
     /**

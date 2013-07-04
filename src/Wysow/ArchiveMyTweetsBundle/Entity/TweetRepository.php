@@ -13,10 +13,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class TweetRepository extends EntityRepository
 {
-    public function findAllByCreatedAtDesc()
+    public function findAllByCreatedAtDesc($favorited = false)
     {
         $qb = $this->createQueryBuilder('t')
             ->orderBy('t.createdAt', 'DESC');
+
+        if($favorited) {
+            $qb->where('t.favorited = 1');
+        }
 
         return $qb->getQuery()->execute();
     }

@@ -12,9 +12,9 @@
 				<div id="tweets" class="rounded">
 					<div class="page-header"><h1>Recent Tweets</h1></div>
 
-					{% if tweets %}
+					{% if pagination %}
 
-					{% for tweet in tweets %}
+					{% for tweet in pagination %}
 						<div class="tweet {% if tweet.inReplyToStatusId %}reply{% endif %} {% if tweet.truncated %}truncated{% endif %}">
 							<p class="message">
 								{% if tweet.favorited %}
@@ -25,14 +25,14 @@
 							<p class="meta">
 								<a href="{{ path('wysow_archivemytweets_default_index') }}~{{ tweet.id }}" rel="bookmark">{{ tweet.createdAt|date('g:ia F jS Y') }}</a>
 								via
-								{{ tweet.source|raw }} {% if tweet.inReplyToStatusId %}<a href="http://twitter.com/~{{ tweet.inReplyToScreenName }}~/status/~{{ tweet.inReplyToStatusId }}">in reply to {{ tweet.inReplyToScreenName }}</a>{% endif %}
+								{{ tweet.source|raw }} {% if tweet.inReplyToStatusId %}<a href="http://twitter.com/{{ tweet.inReplyToScreenName }}/status/{{ tweet.inReplyToStatusId }}">in reply to {{ tweet.inReplyToScreenName }}</a>{% endif %}
 							</p>
 						</div>
 					{% endfor %}
 
-						{#<?php if (isset($pagination)) { ?>
-						<div id="pagination"><?php echo $pagination; ?></div>
-						<?php } ?>#}
+					<div id="pagination">
+						{{ knp_pagination_render(pagination) }}
+					</div>
 
 					{% else %}
 						<p class="no-tweets lead">No tweets found!</p>
