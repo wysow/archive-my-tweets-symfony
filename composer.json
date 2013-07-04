@@ -1,8 +1,22 @@
 {
-    "name": "symfony/framework-standard-edition",
+    "name": "wysow/archive-my-tweets-application",
+    "keywords": ["twitter","archive", "bootstrap"],
+    "homepage": "https://github.com/wysow/archive-my-tweets-symfony",
+    "authors": [
+        {
+            "name": "Gaultier BONIFACE",
+            "homepage": "http://www.wysow.fr",
+            "role": "Developer"
+        },
+        {
+            "name": "Andrew M. Whalen",
+            "homepage": "http://amwhalen.com",
+            "role": "Developer"
+        }
+    ],
     "license": "MIT",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "Application to archive your own tweets",
     "autoload": {
         "psr-0": { "": "src/" }
     },
