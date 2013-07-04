@@ -1,0 +1,34 @@
+{
+    "name": "wysow/archive-my-tweets-application",
+    "keywords": ["twitter","archive", "bootstrap"],
+    "homepage": "https://github.com/wysow/archive-my-tweets-symfony",
+    "authors": [
+        {
+            "name": "Gaultier BONIFACE",
+            "homepage": "http://www.wysow.fr",
+            "role": "Developer"
+        },
+        {
+            "name": "Andrew M. Whalen",
+            "homepage": "http://amwhalen.com",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "type": "project",
+    "description": "Application to archive your own tweets",
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.3.*",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-bundle": "1.2.*",
+        "beberlei/DoctrineExtensions": "dev-master",
+        "tijsverkoyen/twitteroauth": "2.3.1",
+        "knplabs/knp-paginator-bundle": "v2.3.2"
+    },
+    "minimum-stability": "stable",
+    "target-dir": "Wysow/ArchiveMyTweetsBundle"
+}
