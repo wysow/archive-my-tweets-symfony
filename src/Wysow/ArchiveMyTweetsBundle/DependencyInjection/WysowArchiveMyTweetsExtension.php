@@ -31,6 +31,18 @@ class WysowArchiveMyTweetsExtension extends Extension
         $container->setParameter('wysow_archive_my_tweets.twitter.name',
             $config['twitter']['name']);
 
+        $container->setParameter('wysow_archive_my_tweets.twitter.consumer_key',
+            $config['twitter']['consumer_key']);
+
+        $container->setParameter('wysow_archive_my_tweets.twitter.consumer_secret',
+            $config['twitter']['consumer_secret']);
+
+        $container->setParameter('wysow_archive_my_tweets.twitter.oauth_token',
+            $config['twitter']['oauth_token']);
+
+        $container->setParameter('wysow_archive_my_tweets.twitter.oauth_secret',
+            $config['twitter']['oauth_secret']);
+
         $container->setParameter('wysow_archive_my_tweets.gravatar.email',
             $config['gravatar']['email']);
     }

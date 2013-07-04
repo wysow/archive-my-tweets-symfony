@@ -19,7 +19,7 @@ class DefaultController extends Controller
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTweetsByMonths();
 
         $tweets = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAll();
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
 
         $favorited = $this->getDoctrine()
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findByFavorited(true);
@@ -55,7 +55,7 @@ class DefaultController extends Controller
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTweetsByMonths();
 
         $allTweets = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAll();
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
 
         $tweets = $this->getDoctrine()
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findByFavorited(true);
@@ -92,7 +92,7 @@ class DefaultController extends Controller
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTweetsByMonths();
 
         $allTweets = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAll();
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
 
         $favorited = $this->getDoctrine()
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findByFavorited(true);
@@ -120,5 +120,5 @@ class DefaultController extends Controller
             'clients' => $clients,
             'monthYearDate' => $monthYearDate,
         );
-    }    
+    }
 }

@@ -68,5 +68,9 @@ wysow_archive_my_tweets:
     twitter:
         username: Wysow
         name: Gaultier BONIFACE
+        consumer_key: WTDU9bjphcJwy4PlB1Ii8A
+        consumer_secret: CHrOMZt9lkFJ356RZiXrj6maCUcQqWDYIHgE4UzYis
+        oauth_token: 85300487-E1iz3e1JJDZGBe3iZit0jNEtwJkREeStmay5Tmk
+        oauth_secret: ov8yslsVqgdaMx1OVywrn1fjCTsSQv3UNItHuVguNQ
     gravatar:
         email: gboniface@wysow.fr

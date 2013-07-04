@@ -13,10 +13,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class TweetRepository extends EntityRepository
 {
+    public function findAllByCreatedAtDesc()
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->orderBy('t.createdAt', 'DESC');
+
+        return $qb->getQuery()->execute();
+    }
     public function getTweetsByMonths()
     {
         $this->addDoctrineExtensions();
-        
+
         $qb = $this->createQueryBuilder('t')
             ->select('YEAR(t.createdAt) as y, MONTH(t.createdAt) as m, count(t.id) as total')
             ->groupBy('y,m')
@@ -40,7 +47,7 @@ class TweetRepository extends EntityRepository
             ->groupBy('t.source')
             ->orderBy('total', 'DESC');
 
-        return $qb->getQuery()->execute();   
+        return $qb->getQuery()->execute();
     }
 
     public function findByYearAndMonth($year, $month)

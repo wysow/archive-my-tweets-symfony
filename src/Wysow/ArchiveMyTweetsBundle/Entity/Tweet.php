@@ -340,4 +340,41 @@ class Tweet
 
         return $status_text;
     }
+
+    /**
+     * Loads this object from an array.
+     */
+    public function loadArray($t) {
+        $this->id = $t['id'];
+        $this->userId = $t['user']['id'];
+        $this->createdAt = new \DateTime(date('Y-m-d H:i:s', strtotime($t['created_at'])));
+        $this->tweet = $t['text'];
+        $this->source = $t['source'];
+        $this->truncated = ($t['truncated']) ? '1' : '0';
+        $this->favorited = ($t['favorited']) ? '1' : '0';
+        $this->inReplyToStatusId = $t['in_reply_to_status_id'];
+        $this->inReplyToUserId = $t['in_reply_to_user_id'];
+        $this->inReplyToScreenName = $t['in_reply_to_screen_name'];
+
+    }
+
+    /**
+     * Loads this object from another object decoded from JSON.
+     */
+    public function loadJsonObject($t) {
+
+        $this->id                       = $t->id;
+        $this->inReplyToStatusId    = (isset($t->in_reply_to_status_id)) ? $t->in_reply_to_status_id : null;
+        $this->inReplyToUserId      = (isset($t->in_reply_to_user_id)) ? $t->in_reply_to_user_id : null;
+        $this->retweetedStatusId      = (isset($t->retweeted_status)) ? $t->retweeted_status->id : null;
+        $this->retweetedStatusUserId = (isset($t->retweeted_status)) ? $t->retweeted_status->user->id : null;
+        $this->createdAt               = new \DateTime(date('Y-m-d H:i:s', strtotime($t->created_at)));
+        $this->source                   = $t->source;
+        $this->tweet                    = $t->text;
+        $this->userId                  = $t->user->id;
+        // Not included in JSON
+        $this->favorited                = 0;
+        $this->truncated                = 0;
+
+    }
 }
