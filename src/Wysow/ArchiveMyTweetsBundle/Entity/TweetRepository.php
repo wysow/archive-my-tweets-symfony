@@ -4,6 +4,7 @@ namespace Wysow\ArchiveMyTweetsBundle\Entity;
 
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * TweetRepository
@@ -24,6 +25,18 @@ class TweetRepository extends EntityRepository
 
         return $qb->getQuery()->execute();
     }
+
+    public function findAllByClient($client)
+    {
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('Wysow\ArchiveMyTweetsBundle\Entity\Tweet', 't');
+
+        $query = $this->getEntityManager()->createNativeQuery('SELECT * FROM tweets WHERE source REGEXP CONCAT("(<a.*>)?", ?, "(</a>)?")', $rsm)
+            ->setParameter(1, $client);
+
+        return $query->getResult();
+    }
+
     public function getTweetsByMonths()
     {
         $this->addDoctrineExtensions();

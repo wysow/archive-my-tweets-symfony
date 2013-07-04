@@ -1,4 +1,4 @@
-{% set currentPath = path(app.request.attributes.get('_route'), 
+{% set currentPath = path(app.request.attributes.get('_route'),
         app.request.attributes.get('_route_params')) %}
 <div id="sidebar">
 
@@ -44,8 +44,8 @@
 				{% for client in clients %}
 				    {% set clientName = client.source|striptags %}
 				    {% set bgPercent = (client.total / total * 100)|number_format(2) %}
-				    <li class="">
-				    	<a href="">
+				    <li class="{% if currentPath == path('wysow_archivemytweets_default_client', {'client': clientName}) %}here{% endif %}">
+				    	<a href="{{ path('wysow_archivemytweets_default_client', {'client': clientName}) }}">
 				    		<span class="month">{{ clientName }}</span>
 				    		<span class="total">{{ client.total }}</span>
 				    		<span class="bar" style="width:{{ bgPercent }}%"></span>
@@ -53,7 +53,7 @@
 				    </li>
 				{% endfor %}
 			{% else %}
-				<li>No clients.</li>	    
+				<li>No clients.</li>
 			{% endif %}
 		</ul>
 	</div><!-- /sources -->

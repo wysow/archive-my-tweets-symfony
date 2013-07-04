@@ -148,4 +148,53 @@ class DefaultController extends Controller
             'pagination' => $pagination
         );
     }
+
+    /**
+     * @Route("/client/{client}")
+     * @Template()
+     */
+    public function clientAction($client)
+    {
+        $tweetsByMonths = $this->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTweetsByMonths();
+
+        $allTweets = $this->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
+
+        $favorited = $this->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findByFavorited(true);
+
+        $tweets = $this->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByClient($client);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $tweets,
+            $this->get('request')->query->get('page', 1),
+            30
+        );
+        $pagination->setTemplate('WysowArchiveMyTweetsBundle::pagination.html.twig');
+
+        $totalClients = $this->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTotalClients();
+
+        $clients = $this->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getClients();
+
+        $searchTerm = null;
+
+        return array(
+            'gravatarEmail' => $this->get('service_container')
+                ->getParameter('wysow_archive_my_tweets.gravatar.email'),
+            'searchTerm' => $searchTerm,
+            'tweets' => $tweets,
+            'total' => count($allTweets),
+            'totalFavorited' => count($favorited),
+            'tweetsByMonths' => $tweetsByMonths,
+            'totalClients' => $totalClients,
+            'clients' => $clients,
+            'clientName' => $client,
+            'pagination' => $pagination
+        );
+    }
 }
