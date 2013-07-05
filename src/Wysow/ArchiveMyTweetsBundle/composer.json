@@ -1,7 +1,7 @@
 {
-    "name": "wysow/archive-my-tweets-application",
+    "name": "wysow/archive-my-tweets-bundle",
     "keywords": ["twitter","archive", "bootstrap"],
-    "homepage": "https://github.com/wysow/archive-my-tweets-symfony",
+    "homepage": "https://github.com/wysow/WysowArchiveMyTweetsBundle",
     "authors": [
         {
             "name": "Gaultier BONIFACE",
@@ -16,18 +16,22 @@
     ],
     "license": "MIT",
     "type": "project",
-    "description": "Application to archive your own tweets",
+    "description": "Symfony 2.3 bundle to archive your own tweets",
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": { "Wysow\\ArchiveMyTweetsBundle": "" }
     },
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.3.*",
-        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "twig/extensions": "1.0.*",
         "doctrine/doctrine-bundle": "1.2.*",
+        "sensio/framework-extra-bundle": "2.3.*",
         "beberlei/DoctrineExtensions": "dev-master",
         "tijsverkoyen/twitteroauth": "2.3.1",
         "knplabs/knp-paginator-bundle": "v2.3.2"
+    },
+    "require-dev": {
+        "symfony/finder": "2.3.1"
     },
     "minimum-stability": "stable",
     "target-dir": "Wysow/ArchiveMyTweetsBundle"

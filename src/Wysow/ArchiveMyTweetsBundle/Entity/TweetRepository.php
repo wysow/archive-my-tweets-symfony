@@ -54,7 +54,9 @@ class TweetRepository extends EntityRepository
         $qb = $this->createQueryBuilder('t')
             ->select('count(distinct t.source) as total');
 
-        return $qb->getQuery()->getSingleResult()['total'];
+        $result = $qb->getQuery()->getSingleResult();
+
+        return $result['total'];
     }
 
     public function getClients()
