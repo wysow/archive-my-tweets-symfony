@@ -5,8 +5,8 @@
 /app/logs/*
 /build/
 /vendor/
+!/bin/after_build.sh
+!/bin/after_deploy.sh
 /bin/
-!bin/after_build.sh
-!bin/after_deploy.sh
 /composer.phar
 /app/Resources/tweets/*.js
