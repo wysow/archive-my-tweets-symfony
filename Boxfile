@@ -16,6 +16,7 @@ web1:
      - mysql
      - pdo_mysql
      - zip
+     - curl
     php_short_open_tag: "0"
     php_magic_quotes_gpc: "0"
     php_register_globals: "0"
