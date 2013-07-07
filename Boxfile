@@ -30,3 +30,7 @@ web1:
 
     after_deploy:
      - "bash bin/after_deploy.sh"
+
+db1:
+    name: archive-my-tweets-wysow-fr
+    type: mysql
