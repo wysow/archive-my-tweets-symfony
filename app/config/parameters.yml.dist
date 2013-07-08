@@ -1,10 +1,10 @@
 parameters:
     database_driver:   pdo_mysql
-    database_host:     127.0.0.1
-    database_port:     ~
-    database_name:     symfony
-    database_user:     root
-    database_password: ~
+    database_host:     %database.host%
+    database_port:     %database.port%
+    database_name:     %database.name%
+    database_user:     %database.user%
+    database_password: %database.password%
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -12,4 +12,4 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            4rchiv3-my-tw3ats-5ymf0ny
