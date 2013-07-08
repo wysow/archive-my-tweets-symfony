@@ -28,8 +28,7 @@ class TweetRepository extends EntityRepository
 
     public function findAllByClient($client)
     {
-        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
-        $rsm->addRootEntityFromClassMetadata('Wysow\ArchiveMyTweetsBundle\Entity\Tweet', 't');
+        $rsm = $this->getRsm();
 
         $query = $this->getEntityManager()->createNativeQuery('SELECT * FROM tweets WHERE source REGEXP CONCAT("(<a.*>)?", ?, "(</a>)?")', $rsm)
             ->setParameter(1, $client);
@@ -84,10 +83,58 @@ class TweetRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
+    public function getSearchResults($searchTerm)
+    {
+        if (trim($searchTerm) == '') return false;
+
+        $rsm = $this->getRsm();
+
+        $sql  = 'SELECT * FROM tweets WHERE 1 ';
+
+        // split out the quoted items
+        // $phrases[0] is an array of full pattern matches (quotes intact)
+        // $phrases[1] is an array of strings matched by the first parenthesized subpattern, and so on. (quotes stripped)
+        // the .+? means match 1 or more characters, but don't be "greedy", i.e., match the smallest amount
+        preg_match_all("/\"(.+?)\"/", $searchTerm, $phrases);
+        $words = explode(' ', preg_replace('/".+?"/', '', $searchTerm));
+        $wordList = array_merge($phrases[1], $words);
+
+        // create the sql statement
+        $sql .= 'AND (';
+        $wordParams = array();
+        $i = 1;
+        foreach ($wordList as $word) {
+            if (strlen($word)) {
+                $key = ':word'.$i;
+                $wordParams[$key] = '%' . str_replace(",", "", strtolower($word)) . '%';
+                $sql .= "(tweet LIKE ".$key.") or ";
+                $i++;
+            }
+        }
+        $sql = rtrim($sql, " or "); // remove that dangling "or"
+        $sql .= ') ORDER BY id DESC';
+
+        // bind each search term
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        foreach ($wordParams as $key => $param) {
+            $query->setParameter($key, $param);
+        }
+
+        return $query->getResult();
+    }
+
     private function addDoctrineExtensions()
     {
         $emConfig = $this->getEntityManager()->getConfiguration();
         $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
         $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+    }
+
+    private function getRsm()
+    {
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('Wysow\ArchiveMyTweetsBundle\Entity\Tweet', 't');
+
+        return $rsm;
     }
 }

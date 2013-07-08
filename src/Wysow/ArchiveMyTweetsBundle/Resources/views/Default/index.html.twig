@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="span8">
 				<div id="tweets" class="rounded">
-					<div class="page-header"><h1>Recent Tweets</h1></div>
+					<div class="page-header"><h1>{% if searchTerm %}Search <small>{{ searchTerm }}</small>{% else %}Recent Tweets{% endif %}</h1></div>
 
 					{% if pagination %}
 

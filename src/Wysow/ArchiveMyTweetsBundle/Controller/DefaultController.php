@@ -18,8 +18,21 @@ class DefaultController extends Controller
         $tweetsByMonths = $this->getDoctrine()
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTweetsByMonths();
 
-        $tweets = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
+        $searchTerm = null;
+
+        if($this->getRequest()->query->has('q')) {
+            $allTweets = $this->getDoctrine()
+                ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
+
+            $searchTerm = $this->getRequest()->query->get('q');
+
+            // searching in tweets
+            $tweets = $this->getDoctrine()
+                ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getSearchResults($searchTerm);
+        } else {
+            $tweets = $this->getDoctrine()
+                ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
+        }
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -38,14 +51,12 @@ class DefaultController extends Controller
         $clients = $this->getDoctrine()
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getClients();
 
-        $searchTerm = null;
-
         return array(
             'gravatarEmail' => $this->get('service_container')
                 ->getParameter('wysow_archive_my_tweets.gravatar.email'),
             'searchTerm' => $searchTerm,
             'tweets' => $tweets,
-            'total' => count($tweets),
+            'total' => isset($allTweets) ? count($allTweets) : count($tweets),
             'totalFavorited' => count($favorited),
             'tweetsByMonths' => $tweetsByMonths,
             'totalClients' => $totalClients,
