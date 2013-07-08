@@ -35,7 +35,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "beberlei/DoctrineExtensions": "dev-master",
         "tijsverkoyen/twitteroauth": "2.3.1",
-        "knplabs/knp-paginator-bundle": "v2.3.2"
+        "knplabs/knp-paginator-bundle": "v2.3.2",
+        "ekino/newrelic-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

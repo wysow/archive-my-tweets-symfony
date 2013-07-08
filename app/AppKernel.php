@@ -21,6 +21,7 @@ class AppKernel extends Kernel
              * Third party bundles
              */
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Ekino\Bundle\NewRelicBundle\EkinoNewRelicBundle(),
 
             /**
              * Application bundle

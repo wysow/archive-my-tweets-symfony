@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e70c664d0a1ac98f04ccca63550fbf0a",
+    "hash": "4fcf8cb46d42f8e0b3aa6d9dc2e4bedc",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -302,6 +302,55 @@
                 "orm"
             ],
             "time": "2013-05-11 07:51:12"
+        },
+        {
+            "name": "ekino/newrelic-bundle",
+            "version": "dev-master",
+            "target-dir": "Ekino/Bundle/NewRelicBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ekino/EkinoNewRelicBundle.git",
+                "reference": "28836040858d37190914b67490908382ad0e4d9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ekino/EkinoNewRelicBundle/zipball/28836040858d37190914b67490908382ad0e4d9d",
+                "reference": "28836040858d37190914b67490908382ad0e4d9d",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/symfony": "*"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Ekino\\Bundle\\NewRelicBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Rabaix",
+                    "email": "thomas.rabaix@ekino.com",
+                    "homepage": "http://ekino.com"
+                }
+            ],
+            "description": "Integrate New Relic into Symfony2",
+            "homepage": "https://github.com/ekino/EkinoNewRelicBundle",
+            "keywords": [
+                "metric",
+                "monitoring",
+                "performance"
+            ],
+            "time": "2013-07-05 07:47:25"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1360,7 +1409,8 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "beberlei/doctrineextensions": 20
+        "beberlei/doctrineextensions": 20,
+        "ekino/newrelic-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

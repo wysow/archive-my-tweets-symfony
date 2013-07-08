@@ -74,3 +74,7 @@ wysow_archive_my_tweets:
         oauth_secret: ov8yslsVqgdaMx1OVywrn1fjCTsSQv3UNItHuVguNQ
     gravatar:
         email: gboniface@wysow.fr
+
+ekino_new_relic:
+    application_name: "pagoda archive-my-tweets-wysow-fr web1" # (mandatory, default value in newrelic is PHP Application)
+    api_key: %newrelic_apikey%                             # New Relic API

@@ -13,3 +13,5 @@ parameters:
 
     locale:            en
     secret:            4rchiv3-my-tw3ats-5ymf0ny
+
+    newrelic_apikey: %newrelic.apikey%
