@@ -2,7 +2,7 @@
 PHP=php
 
 echo 'Copy the distributed YAML parameters to the required parameters.yml.'
-cp app/config/parameters.dist.yml app/config/parameters.yml
+cp app/config/parameters.yml.pagoda app/config/parameters.yml
 
 echo 'Download the composer.phar file, so the vendors can be installed from the distributed composer.json.'
 if [ ! -f composer.phar ]
