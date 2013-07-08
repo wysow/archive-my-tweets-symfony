@@ -14,7 +14,7 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
     || !in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', 'fe80::1', '::1'))
 ) {
     // to allow access on pagodabox
-    if(isset($_SERVER['APP_NAME']) && $_SERVER['APP_NAME'] == 'archive-my-tweets-wysow-fr') {
+    if(isset($_SERVER['APP_DEBUG']) && $_SERVER['APP_DEBUG'] == '1') {
         $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
         Debug::enable();
 
