@@ -30,7 +30,7 @@ class TweetRepository extends EntityRepository
     {
         $rsm = $this->getRsm();
 
-        $query = $this->getEntityManager()->createNativeQuery('SELECT * FROM tweets WHERE source REGEXP CONCAT("(<a.*>)?", ?, "(</a>)?")', $rsm)
+        $query = $this->getEntityManager()->createNativeQuery('SELECT * FROM tweets WHERE source REGEXP CONCAT("(<a.*>)?", ?, "(</a>)?") ORDER BY created_at DESC', $rsm)
             ->setParameter(1, $client);
 
         return $query->getResult();
@@ -112,7 +112,7 @@ class TweetRepository extends EntityRepository
             }
         }
         $sql = rtrim($sql, " or "); // remove that dangling "or"
-        $sql .= ') ORDER BY id DESC';
+        $sql .= ') ORDER BY created_at DESC';
 
         // bind each search term
         $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
