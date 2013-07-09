@@ -15,8 +15,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $tweetsByMonths = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTweetsByMonths();
+        $tweetsByMonths = $this->getTweetsByMonths();
 
         $searchTerm = null;
 
@@ -34,22 +33,11 @@ class DefaultController extends Controller
                 ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
         }
 
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $tweets,
-            $this->get('request')->query->get('page', 1),
-            30
-        );
-        $pagination->setTemplate('WysowArchiveMyTweetsBundle::pagination.html.twig');
+        $pagination = $this->getPagination($tweets);
 
-        $favorited = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findByFavorited(true);
+        $favorited = $this->getFavoritedTweets();
 
-        $totalClients = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTotalClients();
-
-        $clients = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getClients();
+        list($totalClients, $clients) = $this->getClientsInfo();
 
         return array(
             'gravatarEmail' => $this->get('service_container')
@@ -71,28 +59,16 @@ class DefaultController extends Controller
      */
     public function favoritesAction()
     {
-        $tweetsByMonths = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTweetsByMonths();
+        $tweetsByMonths = $this->getTweetsByMonths();
 
-        $allTweets = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
+        $allTweets = $this->getAllTweets();
 
         $tweets = $this->getDoctrine()
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc(true);
 
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $tweets,
-            $this->get('request')->query->get('page', 1),
-            30
-        );
-        $pagination->setTemplate('WysowArchiveMyTweetsBundle::pagination.html.twig');
+        $pagination = $this->getPagination($tweets);
 
-        $totalClients = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTotalClients();
-
-        $clients = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getClients();
+        list($totalClients, $clients) = $this->getClientsInfo();
 
         $searchTerm = null;
 
@@ -117,31 +93,19 @@ class DefaultController extends Controller
     public function archiveAction($year, $month)
     {
         $monthYearDate = new DateTime($year.'-'.$month.'-01');
-        $tweetsByMonths = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTweetsByMonths();
 
-        $allTweets = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
+        $tweetsByMonths = $this->getTweetsByMonths();
 
-        $favorited = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findByFavorited(true);
+        $allTweets = $this->getAllTweets();
+
+        $favorited = $this->getFavoritedTweets();
 
         $tweets = $this->getDoctrine()
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findByYearAndMonth($year, $month);
 
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $tweets,
-            $this->get('request')->query->get('page', 1),
-            30
-        );
-        $pagination->setTemplate('WysowArchiveMyTweetsBundle::pagination.html.twig');
+        $pagination = $this->getPagination($tweets);
 
-        $totalClients = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTotalClients();
-
-        $clients = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getClients();
+        list($totalClients, $clients) = $this->getClientsInfo();
 
         $searchTerm = null;
 
@@ -166,31 +130,18 @@ class DefaultController extends Controller
      */
     public function clientAction($client)
     {
-        $tweetsByMonths = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTweetsByMonths();
+        $tweetsByMonths = $this->getTweetsByMonths();
 
-        $allTweets = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
+        $allTweets = $this->getAllTweets();
 
-        $favorited = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findByFavorited(true);
+        $favorited = $this->getFavoritedTweets();
 
         $tweets = $this->getDoctrine()
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByClient($client);
 
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $tweets,
-            $this->get('request')->query->get('page', 1),
-            30
-        );
-        $pagination->setTemplate('WysowArchiveMyTweetsBundle::pagination.html.twig');
+        $pagination = $this->getPagination($tweets);
 
-        $totalClients = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTotalClients();
-
-        $clients = $this->getDoctrine()
-            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getClients();
+        list($totalClients, $clients) = $this->getClientsInfo();
 
         $searchTerm = null;
 
@@ -207,5 +158,48 @@ class DefaultController extends Controller
             'clientName' => $client,
             'pagination' => $pagination
         );
+    }
+
+    private function getTweetsByMonths()
+    {
+        return $this->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTweetsByMonths();
+    }
+
+    private function getAllTweets()
+    {
+        return $this->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
+    }
+
+    private function getFavoritedTweets()
+    {
+        return $this->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findByFavorited(true);
+    }
+
+    private function getPagination($tweets)
+    {
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $tweets,
+            $this->get('request')->query->get('page', 1),
+            30
+        );
+
+        $pagination->setTemplate('WysowArchiveMyTweetsBundle::pagination.html.twig');
+
+        return $pagination;
+    }
+
+    private function getClientsInfo()
+    {
+        $totalClients = $this->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getTotalClients();
+
+        $clients = $this->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getClients();
+
+        return array($totalClients, $clients);
     }
 }

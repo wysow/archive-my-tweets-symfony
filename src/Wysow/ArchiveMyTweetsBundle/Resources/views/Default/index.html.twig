@@ -11,32 +11,8 @@
 			<div class="span8">
 				<div id="tweets" class="rounded">
 					<div class="page-header"><h1>{% if searchTerm %}Search <small>{{ searchTerm }}</small>{% else %}Recent Tweets{% endif %}</h1></div>
+					{% include 'WysowArchiveMyTweetsBundle:Default:list.html.twig' with { 'pagination': pagination } %}
 
-					{% if pagination %}
-
-					{% for tweet in pagination %}
-						<div class="tweet {% if tweet.inReplyToStatusId %}reply{% endif %} {% if tweet.truncated %}truncated{% endif %}">
-							<p class="message">
-								{% if tweet.favorited %}
-									<span class="badge badge-warning"><i class="icon-star icon-white" title="Favorite"></i></span>
-								{% endif %}
-								{{ tweet.getLinkedTweet|raw }}
-							</p>
-							<p class="meta">
-								<a href="{{ path('wysow_archivemytweets_default_index') }}~{{ tweet.id }}" rel="bookmark">{{ tweet.createdAt|date('g:ia F jS Y') }}</a>
-								via
-								{{ tweet.source|raw }} {% if tweet.inReplyToStatusId %}<a href="http://twitter.com/{{ tweet.inReplyToScreenName }}/status/{{ tweet.inReplyToStatusId }}">in reply to {{ tweet.inReplyToScreenName }}</a>{% endif %}
-							</p>
-						</div>
-					{% endfor %}
-
-					<div id="pagination">
-						{{ knp_pagination_render(pagination) }}
-					</div>
-
-					{% else %}
-						<p class="no-tweets lead">No tweets found!</p>
-					{% endif %}
 				</div><!-- /tweets -->
 			</div><!-- /span8 -->
 
