@@ -8,7 +8,7 @@
                 {{ tweet.getLinkedTweet|raw }}
             </p>
             <p class="meta">
-                <a href="{{ path('wysow_archivemytweets_default_index') }}~{{ tweet.id }}" rel="bookmark">{{ tweet.createdAt|date('g:ia F jS Y') }}</a>
+                <a href="https://twitter.com/{{ tweet.userScreenName }}/status/{{ tweet.id }}" target="_blank" rel="bookmark">{{ tweet.createdAt|date('g:ia F jS Y') }}</a>
                 via
                 {{ tweet.source|raw }} {% if tweet.inReplyToStatusId %}<a href="http://twitter.com/{{ tweet.inReplyToScreenName }}/status/{{ tweet.inReplyToStatusId }}">in reply to {{ tweet.inReplyToScreenName }}</a>{% endif %}
             </p>

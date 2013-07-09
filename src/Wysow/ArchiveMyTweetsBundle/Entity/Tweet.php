@@ -28,6 +28,13 @@ class Tweet
     private $userId;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="user_screen_name", type="string", length=255, nullable=false)
+     */
+    private $userScreenName;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -87,7 +94,7 @@ class Tweet
      * Set id
      *
      * @param  integer $id
-     * @return Tweets
+     * @return Tweet
      */
     public function setId($id)
     {
@@ -110,7 +117,7 @@ class Tweet
      * Set userId
      *
      * @param  integer $userId
-     * @return Tweets
+     * @return Tweet
      */
     public function setUserId($userId)
     {
@@ -130,10 +137,33 @@ class Tweet
     }
 
     /**
+     * Set userScreenName
+     *
+     * @param  string $userScreenName
+     * @return Tweet
+     */
+    public function setUserScreenName($userScreenName)
+    {
+        $this->userScreenName = $userScreenName;
+
+        return $this;
+    }
+
+    /**
+     * Get userScreenName
+     *
+     * @return string
+     */
+    public function getUserScreenName()
+    {
+        return $this->userScreenName;
+    }
+
+    /**
      * Set createdAt
      *
      * @param  \DateTime $createdAt
-     * @return Tweets
+     * @return Tweet
      */
     public function setCreatedAt($createdAt)
     {
@@ -156,7 +186,7 @@ class Tweet
      * Set tweet
      *
      * @param  string $tweet
-     * @return Tweets
+     * @return Tweet
      */
     public function setTweet($tweet)
     {
@@ -179,7 +209,7 @@ class Tweet
      * Set source
      *
      * @param  string $source
-     * @return Tweets
+     * @return Tweet
      */
     public function setSource($source)
     {
@@ -195,14 +225,20 @@ class Tweet
      */
     public function getSource()
     {
-        return $this->source;
+        // adding 'target="_blank"' in source link
+        $sourceText = preg_replace(
+            '/(rel="nofollow"+)/',
+            'target="_blank" \1',
+            $this->source
+        );
+        return $sourceText;
     }
 
     /**
      * Set truncated
      *
      * @param  boolean $truncated
-     * @return Tweets
+     * @return Tweet
      */
     public function setTruncated($truncated)
     {
@@ -225,7 +261,7 @@ class Tweet
      * Set favorited
      *
      * @param  boolean $favorited
-     * @return Tweets
+     * @return Tweet
      */
     public function setFavorited($favorited)
     {
@@ -248,7 +284,7 @@ class Tweet
      * Set inReplyToStatusId
      *
      * @param  integer $inReplyToStatusId
-     * @return Tweets
+     * @return Tweet
      */
     public function setInReplyToStatusId($inReplyToStatusId)
     {
@@ -271,7 +307,7 @@ class Tweet
      * Set inReplyToUserId
      *
      * @param  integer $inReplyToUserId
-     * @return Tweets
+     * @return Tweet
      */
     public function setInReplyToUserId($inReplyToUserId)
     {
@@ -294,7 +330,7 @@ class Tweet
      * Set inReplyToScreenName
      *
      * @param  string $inReplyToScreenName
-     * @return Tweets
+     * @return Tweet
      */
     public function setInReplyToScreenName($inReplyToScreenName)
     {
@@ -320,21 +356,21 @@ class Tweet
         // linkify URLs
         $statusText = preg_replace(
             '/(https?:\/\/\S+)/',
-            '<a href="\1">\1</a>',
+            '<a href="\1" target="_blank">\1</a>',
             $this->tweet
         );
 
         // linkify twitter users
         $statusText = preg_replace(
             '/(^|\s)(@(\w+))/',
-            '\1<a href="http://twitter.com/\3">\2</a>',
+            '\1<a href="http://twitter.com/\3" target="_blank">\2</a>',
             $statusText
         );
 
         // linkify tags
         $statusText = preg_replace(
             '/(^|\s)(#(\S+))/',
-            '\1<a href="http://twitter.com/search?q=%23\3">\2</a>',
+            '\1<a href="http://twitter.com/search?q=%23\3" target="_blankf">\2</a>',
             $statusText
         );
 
@@ -347,6 +383,7 @@ class Tweet
     public function loadArray($t) {
         $this->id = $t['id'];
         $this->userId = $t['user']['id'];
+        $this->userScreenName = $t['user']['screen_name'];
         $this->createdAt = new \DateTime(date('Y-m-d H:i:s', strtotime($t['created_at'])));
         $this->tweet = $t['text'];
         $this->source = $t['source'];
@@ -362,7 +399,6 @@ class Tweet
      * Loads this object from another object decoded from JSON.
      */
     public function loadJsonObject($t) {
-
         $this->id                       = $t->id;
         $this->inReplyToStatusId    = (isset($t->in_reply_to_status_id)) ? $t->in_reply_to_status_id : null;
         $this->inReplyToUserId      = (isset($t->in_reply_to_user_id)) ? $t->in_reply_to_user_id : null;
@@ -372,6 +408,7 @@ class Tweet
         $this->source                   = $t->source;
         $this->tweet                    = $t->text;
         $this->userId                  = $t->user->id;
+        $this->userScreenName          = $t->user->screen_name;
         // Not included in JSON
         $this->favorited                = 0;
         $this->truncated                = 0;
