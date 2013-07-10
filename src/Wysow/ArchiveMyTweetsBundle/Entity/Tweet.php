@@ -402,8 +402,6 @@ class Tweet
         $this->id                       = $t->id;
         $this->inReplyToStatusId    = (isset($t->in_reply_to_status_id)) ? $t->in_reply_to_status_id : null;
         $this->inReplyToUserId      = (isset($t->in_reply_to_user_id)) ? $t->in_reply_to_user_id : null;
-        $this->retweetedStatusId      = (isset($t->retweeted_status)) ? $t->retweeted_status->id : null;
-        $this->retweetedStatusUserId = (isset($t->retweeted_status)) ? $t->retweeted_status->user->id : null;
         $this->createdAt               = new \DateTime(date('Y-m-d H:i:s', strtotime($t->created_at)));
         $this->source                   = $t->source;
         $this->tweet                    = $t->text;

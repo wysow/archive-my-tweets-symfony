@@ -5,10 +5,9 @@ php:
   - 5.4
 
 before_script:
-    - mv Tests/app/config/parameters.yml.dist Tests/app/config/parameters.yml
+    - "mysql -e 'create database `archivemytweetssymfony`;'"
+    - mv Tests/Functional/config/parameters.yml.dist Tests/Functional/config/parameters.yml
     - composer self-update
     - composer install --dev --prefer-source
-    - php Tests/app/console doctrine:database:create
-    - php Tests/app/console doctrine:schema:create
 
 script: phpunit --coverage-text

@@ -1,0 +1,19 @@
+imports:
+    - { resource: parameters.yml }
+
+doctrine:
+    dbal:
+        driver:   %database_driver%
+        host:     %database_host%
+        port:     %database_port%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        entity_managers:
+            default:
+                auto_mapping: true
+
+services:
+    em: "@doctrine.orm.entity_manager"

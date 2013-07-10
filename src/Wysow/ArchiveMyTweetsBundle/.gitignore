@@ -1,5 +1,4 @@
 composer.lock
 /vendor
-/Tests/app/cache/*
-/Tests/app/logs/*
-/Tests/app/config/parameters.yml
+/Tests/Functional/logs/*
+/Tests/Functional/config/parameters.yml

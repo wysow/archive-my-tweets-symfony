@@ -1,0 +1,15 @@
+imports:
+    - { resource: framework.yml }
+    - { resource: doctrine.yml }
+    - { resource: twig.yml }
+
+wysow_archive_my_tweets:
+    twitter:
+        username: Wysow
+        name: Gaultier BONIFACE
+        consumer_key:
+        consumer_secret:
+        oauth_token:
+        oauth_secret:
+    gravatar:
+        email: gboniface@wysow.fr
