@@ -13,5 +13,4 @@ before_script:
 
 script: phpunit -c app --coverage-text
 
-after_success:
-    - bin/after_success.sh
+after_success: bin/after_success.sh
