@@ -35,6 +35,6 @@ branch="${branch#refs/heads/}"
 
 ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -C "travis-deployment"
 
-pagoda -u $PAGODA_USERNAME -p $PAGODA_PASSWORD key:push
-git remote add pagoda git@git.pagodabox.com:archive-my-tweets-wysow-fr.git
-git push pagoda $branch
+yes | pagoda -u $PAGODA_USERNAME -p $PAGODA_PASSWORD key:push
+yes | git remote add pagoda git@git.pagodabox.com:archive-my-tweets-wysow-fr.git
+yes | git push pagoda $branch
