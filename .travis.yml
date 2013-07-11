@@ -6,7 +6,7 @@ php:
 
 before_script:
     - "mysql -e 'create database `archivemytweetssymfony`;'"
-    - "mysql archivemytweetssymfony < Tests/Resources/data/tweets.sql"
+    - "mysql archivemytweetssymfony < src/Wysow/ArchiveMyTweetsBundle/Tests/Resources/data/tweets.sql"
     - mv src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml.dist src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml
     - composer self-update
     - composer install --dev --prefer-source
