@@ -11,19 +11,11 @@ The bulk of the documentation is stored in the `Resources/doc/index.md` file in 
 
 [Read the Documentation](https://github.com/wysow/WysowArchiveMyTweetsBundle/blob/master/Resources/doc/index.md)
 
-
 ## License
 
 This bundle is under the MIT license. See the complete license in the bundle:
 
     /LICENSE
-
-
-## TODO
-
-- More tests
-- Refactoring
-
 
 ## Credits
 

@@ -6,8 +6,9 @@ php:
 
 before_script:
     - "mysql -e 'create database `archivemytweetssymfony`;'"
+    - "mysql archivemytweetssymfony < Tests/Resources/data/tweets.sql"
     - mv Tests/Functional/config/parameters.yml.dist Tests/Functional/config/parameters.yml
     - composer self-update
     - composer install --dev --prefer-source
 
-script: phpunit --coverage-text
+script: phpunit --coverage-text  --colors

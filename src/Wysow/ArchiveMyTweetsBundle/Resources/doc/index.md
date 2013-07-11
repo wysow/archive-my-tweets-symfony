@@ -9,7 +9,7 @@ This version of the bundle requires Symfony 2.3.
 
 Installation is a quick 4 steps process:
 
-1. Download FOSOAuthServerBundle
+1. Install WysowArchiveMyTweetsBundle
 2. Enable the Bundle
 3. Configure your application's config.yml
 4. Configure your application's routing.yml
@@ -71,3 +71,27 @@ wysow_archive_my_tweets:
     type:     annotation
     prefix:   # the prefix you want to use to reach this bundle's controllers
 ```
+
+## Setting up a cron job
+
+If you want to automatically update your tweets you'll need to set up a cron job. You can find more information on Cron elsewhere, but here's an example that will run your cron.php every hour of the day:
+
+    0 * * * * /usr/bin/env php /path/to/the/app/console wysow:twitter:archive [--with-favorites]
+
+The `with-favorites` option is to import your own tweets + the tweets you have favorited.
+
+## Importing Your Official Twitter Archive
+
+If you started using Archive My Tweets after you already had 3200 tweets, then you're in luck. It's now possible to import your older tweets from your downloaded twitter archive.
+
+Twitter now allows most accounts (they're still rolling this out) to download an official archive of all your tweets from the beginning of time. This is great news, and especially amazing is the JavaScript app they've included with it to browse and search your tweets.
+
+To import the archive follow these steps:
+
+1. Visit your Twitter account settings: [https://twitter.com/settings/account](https://twitter.com/settings/account)
+2. Near the bottom of the settings page there should be a button to download your archive. (If you don't see it yet, you may have to wait until it's rolled out to all accounts.)
+3. Once you've downloaded and unzipped your archive, copy all of the .js files in the `app/Ressources/tweets` folder.
+4. Run the command `php /path/to/the/app/console wysow:twitter:archive --from-import=/path/to/the/app/Ressources/tweets` to import all your tweets in database
+
+You'll only have to do this one time, as the cron running regularly will import all your newest tweets. Tweets that are already in your database will be ignored, so don't worry about duplication.
+

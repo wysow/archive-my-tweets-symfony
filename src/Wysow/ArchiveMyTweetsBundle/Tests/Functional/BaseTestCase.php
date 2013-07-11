@@ -3,6 +3,7 @@
 namespace Wysow\ArchiveMyTweetsBundle\Tests\Functional;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BaseTestCase extends WebTestCase
@@ -18,18 +19,5 @@ class BaseTestCase extends WebTestCase
     {
         $fs = new Filesystem();
         $fs->remove(sys_get_temp_dir().'/WysowArchiveMyTweetsBundle/');
-    }
-
-    protected final function importDatabaseSchema()
-    {
-        $em = self::$kernel->getContainer()->get('doctrine.orm.entity_manager');
-
-        $metadata = $em->getMetadataFactory()->getAllMetadata();
-
-        if (!empty($metadata)) {
-            $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($em);
-            $schemaTool->dropDatabase();
-            $schemaTool->createSchema($metadata);
-        }
     }
 }
