@@ -1,17 +1,29 @@
+---
 language: php
-
 php:
-  - 5.3
-  - 5.4
-
+- 5.3
+- 5.4
 before_script:
-    - "mysql -e 'create database `archivemytweetssymfony`;'"
-    - "mysql archivemytweetssymfony < src/Wysow/ArchiveMyTweetsBundle/Tests/Resources/data/tweets.sql"
-    - mv src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml.dist src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml
-    - composer self-update
-    - composer install --dev --prefer-source
-
+- mysql -e 'create database `archivemytweetssymfony`;'
+- mysql archivemytweetssymfony < src/Wysow/ArchiveMyTweetsBundle/Tests/Resources/data/tweets.sql
+- mv src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml.dist src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml
+- composer self-update
+- composer install --dev --prefer-source
 script: phpunit -c app --coverage-text
 after_success:
-    - chmod +x bin/after_success
-    - ./bin/after_success
+- chmod +x bin/after_success
+- ./bin/after_success
+env:
+  pagoda:
+    username:
+      secure: ! 'ABCdbakbYIYM5Yc7GqSLV2XIYRGxblTXkFRRdlshlB49qeUoxqc4l4QZyuqI
+
+        zuSgPf5Gyuw7iFTIZ7ckUhRx+bT83GgDzNjGkGM4pZROQmi6G0FYeE1o4jG3
+
+        iiFIYHCWHWcNhjOdYQrO6MBYq2RgJQ1CFoMPWV4y323VY2CeQ38='
+    password:
+      secure: ! 'DZMNKI4eOOQsiTVQT1iQXu55lQtF5lF7p5hg3a0g/B/Njc1HSvxWvlDwm/vt
+
+        Atpg544hkECEPJ78DyKiONjGEBqa3Zb6GT+fYUb66Q+O0N0SNmQPxw36xzYs
+
+        w+cXSh6I9naEU9601NzPIrMjCYK3yg9s3/b5z4QWSpNIECw+/C8='
