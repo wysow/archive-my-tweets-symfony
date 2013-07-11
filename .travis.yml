@@ -4,6 +4,8 @@ php:
 - 5.3
 - 5.4
 before_script:
+- echo -e "Host pagoda.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- echo -e "Host git.pagoda.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - mysql -e 'create database `archivemytweetssymfony`;'
 - mysql archivemytweetssymfony < src/Wysow/ArchiveMyTweetsBundle/Tests/Resources/data/tweets.sql
 - mv src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml.dist src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml

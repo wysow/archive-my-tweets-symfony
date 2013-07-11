@@ -21,15 +21,6 @@ if ! have pagoda; then
   exit 1
 fi
 
-mkdir -p ~/.ssh
-echo "Updating SSH config"
-echo "Host git.pagoda.com" >> ~/.ssh/config
-echo "  StrictHostKeyChecking=no" >> ~/.ssh/config
-echo "  CheckHostIP=no" >> ~/.ssh/config
-echo "  UserKnownHostsFile=/dev/null" >> ~/.ssh/config
-echo "End of SSH config update with values:"
-cat ~/.ssh/config
-
 ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -C "travis-deployment"
 
 yes | pagoda -u $PAGODA_USERNAME -p $PAGODA_PASSWORD key:push
