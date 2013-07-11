@@ -14,16 +14,14 @@ after_success:
 - chmod +x bin/after_success
 - ./bin/after_success
 env:
-  pagoda:
-    username:
-      secure: ! 'ABCdbakbYIYM5Yc7GqSLV2XIYRGxblTXkFRRdlshlB49qeUoxqc4l4QZyuqI
+  global:
+  - secure: ! 'R680anVBvOx3kuVVTZLqnu4yYd4pvIB6nS4DzpfYIQd7UQ6w9vF9ToNtvSOX
 
-        zuSgPf5Gyuw7iFTIZ7ckUhRx+bT83GgDzNjGkGM4pZROQmi6G0FYeE1o4jG3
+      U/mF/UTQBsGdl5cSysq4pEOG36V7rG4LWYbOPyCEn0lWenw+S3l0VyHKrxs/
 
-        iiFIYHCWHWcNhjOdYQrO6MBYq2RgJQ1CFoMPWV4y323VY2CeQ38='
-    password:
-      secure: ! 'DZMNKI4eOOQsiTVQT1iQXu55lQtF5lF7p5hg3a0g/B/Njc1HSvxWvlDwm/vt
+      vnSyNB0sSQalhd/FF1RjtVg4rqeLLwbujSfq10Ra5DYvlaZD2L0='
+  - secure: ! 'J+ERUUoNc6wsJnRH/tBUloH85ZNnmccUDvx6TJFfD8XwxsP+GLQTvwvEqTvP
 
-        Atpg544hkECEPJ78DyKiONjGEBqa3Zb6GT+fYUb66Q+O0N0SNmQPxw36xzYs
+      UmyUHueVnnVEmoHJv+137MLPsHp2WTVfoiM2KmsBV5GkbbBIUxxFAU6A+nSy
 
-        w+cXSh6I9naEU9601NzPIrMjCYK3yg9s3/b5z4QWSpNIECw+/C8='
+      Fnd8tl2iGOvPwsYwxxRppU5nfKxlKNoDjOcktIMPBEeLSK6w08c='
