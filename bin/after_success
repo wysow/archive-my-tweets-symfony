@@ -24,8 +24,8 @@ fi
 mkdir -p ~/.ssh
 echo "Updating SSH config"
 echo "Host git.pagoda.com" >> ~/.ssh/config
-echo "  StrictHostKeyChecking no" >> ~/.ssh/config
-echo "  CheckHostIP no" >> ~/.ssh/config
+echo "  StrictHostKeyChecking=no" >> ~/.ssh/config
+echo "  CheckHostIP=no" >> ~/.ssh/config
 echo "  UserKnownHostsFile=/dev/null" >> ~/.ssh/config
 echo "End of SSH config update with values:"
 cat ~/.ssh/config
