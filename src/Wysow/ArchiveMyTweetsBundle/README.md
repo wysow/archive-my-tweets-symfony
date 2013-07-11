@@ -5,6 +5,8 @@ Symfony 2.3 bundle to archive your own tweets + favorited ones, inspired by http
 
 [![Build Status](https://secure.travis-ci.org/wysow/WysowArchiveMyTweetsBundle.png)](http://travis-ci.org/wysow/WysowArchiveMyTweetsBundle)
 
+[![knpbundles.com](http://www.knpbundles.com/wysow/WysowArchiveMyTweetsBundle/badge-short)](http://www.knpbundles.com/wysow/WysowArchiveMyTweetsBundle)
+
 ## Documentation
 
 The bulk of the documentation is stored in the `Resources/doc/index.md` file in this bundle:
