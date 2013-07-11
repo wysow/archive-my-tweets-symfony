@@ -15,10 +15,10 @@ before_script:
 script: phpunit -c app --coverage-text
 after_success:
 - gem install pagoda
-- pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP
+- pagoda --username=$PAGODA_USERNAME --password=$PAGODA_PASSWORD --app=$PAGODA_APP
   init
 - ssh-keygen -N "" -f ~/.ssh/pagoda
-- pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP
+- pagoda --username=$PAGODA_USERNAME --password=$PAGODA_PASSWORD --app=$PAGODA_APP
   key:push --file=$HOME/.ssh/pagoda.pub
 - echo "Host git.pagodabox.com" >> ~/.ssh/config
 - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
@@ -28,7 +28,7 @@ after_success:
 - echo "   IdentitiesOnly yes" >> ~/.ssh/config
 - git remote add pagoda git@git.pagodabox.com:archive-my-tweets-wysow-fr.git
 - git push --force pagoda master
-- pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP
+- pagoda --username=$PAGODA_USERNAME --password=$PAGODA_PASSWORD --app=$PAGODA_APP
   deploy
 env:
   global:
