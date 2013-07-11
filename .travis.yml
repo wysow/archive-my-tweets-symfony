@@ -4,8 +4,6 @@ php:
 - 5.3
 - 5.4
 before_script:
-- echo -e "Host pagoda.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-- echo -e "Host git.pagoda.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - mysql -e 'create database `archivemytweetssymfony`;'
 - mysql archivemytweetssymfony < src/Wysow/ArchiveMyTweetsBundle/Tests/Resources/data/tweets.sql
 - mv src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml.dist src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml
@@ -13,8 +11,21 @@ before_script:
 - composer install --dev --prefer-source
 script: phpunit -c app --coverage-text
 after_success:
-- chmod +x bin/after_success
-- ./bin/after_success
+- gem install pagoda
+- pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP
+  init
+- ssh-keygen -N "" -f ~/.ssh/pagoda
+- pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP
+  key:push --file=$HOME/.ssh/pagoda.pub
+- echo "Host git.pagodabox.com" >> ~/.ssh/config
+- echo "   StrictHostKeyChecking no" >> ~/.ssh/config
+- echo "   CheckHostIP no" >> ~/.ssh/config
+- echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+- echo "   IdentityFile=${HOME}/.ssh/pagoda" >> ~/.ssh/config
+- echo "   IdentitiesOnly yes" >> ~/.ssh/config
+- git push --force pagoda master
+- pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP
+  deploy
 env:
   global:
   - secure: ! 'R680anVBvOx3kuVVTZLqnu4yYd4pvIB6nS4DzpfYIQd7UQ6w9vF9ToNtvSOX
@@ -27,3 +38,8 @@ env:
       UmyUHueVnnVEmoHJv+137MLPsHp2WTVfoiM2KmsBV5GkbbBIUxxFAU6A+nSy
 
       Fnd8tl2iGOvPwsYwxxRppU5nfKxlKNoDjOcktIMPBEeLSK6w08c='
+  - secure: ! 'JFPT1mS1beaXCk8J/Js2QR0W0aJ1mt6rEAPS7CGE4mY9HOh2EKN5cVWL5Frc
+
+      BunhmIW2Ml6UwlbVXCxlordQbutvB5nAfWhYlEtI2mqVYdgJy9+/U+QZZbUB
+
+      rEOvcs/o5OZmT8cA82jtqopGUmTV+of4NURgOudbL51hxQ2ELVg='
