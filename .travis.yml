@@ -26,6 +26,7 @@ after_success:
 - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
 - echo "   IdentityFile=${HOME}/.ssh/pagoda" >> ~/.ssh/config
 - echo "   IdentitiesOnly yes" >> ~/.ssh/config
+- git remote add git@git.pagodabox.com:archive-my-tweets-wysow-fr.git
 - git push --force pagoda master
 - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP
   deploy
