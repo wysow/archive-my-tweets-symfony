@@ -28,7 +28,6 @@ after_success:
 - echo "   IdentitiesOnly yes" >> ~/.ssh/config
 - git remote add pagoda git@git.pagodabox.com:archive-my-tweets-wysow-fr.git
 - git push --force pagoda master
-  deploy
 env:
   global:
   - secure: ! 'R680anVBvOx3kuVVTZLqnu4yYd4pvIB6nS4DzpfYIQd7UQ6w9vF9ToNtvSOX
