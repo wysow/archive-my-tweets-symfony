@@ -362,7 +362,7 @@ class Tweet
 
         // linkify twitter users
         $statusText = preg_replace(
-            '/(^|\s)(@(\w+))/',
+            '/(^|\s|.)(@(\w+))/',
             '\1<a href="http://twitter.com/\3" target="_blank">\2</a>',
             $statusText
         );
