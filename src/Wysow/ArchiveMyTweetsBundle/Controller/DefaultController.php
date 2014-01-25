@@ -19,7 +19,7 @@ class DefaultController extends Controller
 
         $searchTerm = null;
 
-        if($this->getRequest()->query->has('q')) {
+        if($this->getRequest()->query->has('q') && $this->getRequest()->query->get('q') != '') {
             $allTweets = $this->getDoctrine()
                 ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findAllByCreatedAtDesc();
 
