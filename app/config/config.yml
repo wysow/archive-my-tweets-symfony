@@ -66,15 +66,43 @@ swiftmailer:
 
 wysow_archive_my_tweets:
     twitter:
-        username: Wysow
-        name: Gaultier BONIFACE
-        consumer_key: WTDU9bjphcJwy4PlB1Ii8A
-        consumer_secret: CHrOMZt9lkFJ356RZiXrj6maCUcQqWDYIHgE4UzYis
-        oauth_token: 85300487-E1iz3e1JJDZGBe3iZit0jNEtwJkREeStmay5Tmk
-        oauth_secret: ov8yslsVqgdaMx1OVywrn1fjCTsSQv3UNItHuVguNQ
+        username: %twitter_username%
+        name: %twitter_name%
+        consumer_key: %twitter_consumer_key%
+        consumer_secret: %twitter_consumer_secret%
+        oauth_token: %twitter_oauth_token%
+        oauth_secret: %twitter_oauth_secret%
     gravatar:
-        email: gboniface@wysow.fr
+        email: %gravatar_email%
 
 ekino_new_relic:
     application_name: "pagoda archive-my-tweets-wysow-fr web1" # (mandatory, default value in newrelic is PHP Application)
-    api_key: %newrelic_apikey%                             # New Relic API
+    api_key: %newrelic_apikey%                                 # New Relic API
+
+snc_redis:
+    clients:
+        default:
+            type: phpredis
+            alias: default
+            dsn: %redis_dsn_default%
+            logging: %kernel.debug%
+        cache:
+            type: phpredis
+            alias: cache
+            dsn: %redis_dsn_cache%
+            logging: %kernel.debug%
+    session:
+        client: default
+        prefix: archive_my_tweets
+        use_as_default: true
+    doctrine:
+        metadata_cache:
+            client: cache
+            entity_manager: default
+        result_cache:
+            client: cache
+            entity_manager: default
+            namespace: "dcrc:"
+        query_cache:
+            client: cache
+            entity_manager: default

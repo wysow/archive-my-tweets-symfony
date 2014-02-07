@@ -22,6 +22,7 @@ class AppKernel extends Kernel
              */
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Ekino\Bundle\NewRelicBundle\EkinoNewRelicBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
 
             /**
              * Application bundle

@@ -13,3 +13,5 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+    redis_dsn_default: ~
+    redis_dsn_cache: ~
