@@ -38,3 +38,7 @@ web1:
 db1:
     name: archive-my-tweets-wysow-fr
     type: mysql
+
+cache1:
+    name: archive-my-tweets-wysow-fr
+    type: redis

@@ -15,5 +15,5 @@ parameters:
     secret:            4rchiv3-my-tw3ats-5ymf0ny
 
     newrelic_apikey: %newrelic.apikey%
-    redis_dsn_default: %redis_dsn_default%
-    redis_dsn_cache: %redis_dsn_cache%
+    redis_dsn_default: %redis.dsn.default%
+    redis_dsn_cache: "%redis.dsn.default%/1"
