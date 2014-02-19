@@ -12,8 +12,15 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            4rchiv3-my-tw3ats-5ymf0ny
+    secret:            %app.secret%
 
+    twitter_username: %twitter.username%
+    twitter_name: %twitter.name%
+    twitter_consumer_key: %twitter.consumer.key%
+    twitter_consumer_secret: %twitter.consumer.secret%
+    twitter_oauth_token: %twitter.oauth.token%
+    twitter_oauth_secret: %twitter.oauth.secret%
+    gravatar_email: %gravatar.email%
     newrelic_apikey: %newrelic.apikey%
     redis_dsn_default: %redis.dsn.default%
     redis_dsn_cache: "%redis.dsn.default%/1"
