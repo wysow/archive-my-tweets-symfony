@@ -11,7 +11,7 @@ if [ ! -f composer.phar ]
 fi
 
 echo 'Install the needed vendors for this application.'
-$PHP composer.phar install --prefer-source --no-progress
+$PHP composer.phar install --prefer-source --no-progress --no-dev
 
 echo 'Dump the optimized autoloader classmap for performance reasons.'
 $PHP composer.phar dump-autoload --optimize

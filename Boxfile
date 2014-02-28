@@ -29,9 +29,6 @@ web1:
     after_build:
      - "bash bin/after_build.sh"
 
-    #before_deploy:
-    # - "php app/console doctrine:migrations:migrate --no-interaction"
-
     after_deploy:
      - "bash bin/after_deploy.sh"
 
