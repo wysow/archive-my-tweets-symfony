@@ -1,15 +1,44 @@
 imports:
+    - { resource: parameters.yml }
     - { resource: framework.yml }
     - { resource: doctrine.yml }
     - { resource: twig.yml }
 
 wysow_archive_my_tweets:
     twitter:
-        username: Wysow
-        name: Gaultier BONIFACE
+        username:
+        name:
         consumer_key:
         consumer_secret:
         oauth_token:
         oauth_secret:
     gravatar:
-        email: gboniface@wysow.fr
+        email:
+
+snc_redis:
+    clients:
+        default:
+            type: phpredis
+            alias: default
+            dsn: %redis_dsn_default%
+            logging: %kernel.debug%
+        cache:
+            type: phpredis
+            alias: cache
+            dsn: %redis_dsn_cache%
+            logging: %kernel.debug%
+    session:
+        client: default
+        prefix: archive_my_tweets
+        use_as_default: true
+    doctrine:
+        metadata_cache:
+            client: cache
+            entity_manager: default
+        result_cache:
+            client: cache
+            entity_manager: default
+            namespace: "dcrc:"
+        query_cache:
+            client: cache
+            entity_manager: default

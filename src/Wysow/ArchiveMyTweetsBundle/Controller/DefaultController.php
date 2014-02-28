@@ -229,7 +229,7 @@ class DefaultController extends Controller
             30
         );
 
-        if (get_class($objects[0]) == 'Wysow\ArchiveMyTweetsBundle\Entity\Tweet') {
+        if (isset($objects[0]) && get_class($objects[0]) == 'Wysow\ArchiveMyTweetsBundle\Entity\Tweet') {
             $pagination->setTemplate('WysowArchiveMyTweetsBundle::tweetsPagination.html.twig');
         } else {
             $pagination->setTemplate('WysowArchiveMyTweetsBundle::followersPagination.html.twig');

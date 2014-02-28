@@ -10,6 +10,7 @@ branches:
     - master
 before_script:
 - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+- phpenv rehash
 - mysql -e 'create database `archivemytweetssymfony`;'
 - mysql archivemytweetssymfony < src/Wysow/ArchiveMyTweetsBundle/Tests/Resources/data/tweets.sql
 - mv src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml.dist src/Wysow/ArchiveMyTweetsBundle/Tests/Functional/config/parameters.yml

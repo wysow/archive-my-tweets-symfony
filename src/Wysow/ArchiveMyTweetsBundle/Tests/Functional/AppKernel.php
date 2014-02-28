@@ -38,6 +38,7 @@ class AppKernel extends Kernel
              * Third party bundles
              */
             new \Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new \Snc\RedisBundle\SncRedisBundle(),
 
             /**
              * Application bundle

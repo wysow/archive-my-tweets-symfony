@@ -25,7 +25,7 @@ class DefaultControllerTest extends BaseTestCase
 
         $crawler = $client->request('GET', '/favorites');
 
-        $this->assertTrue($crawler->filter('html:contains("Favorite Tweets")')->count() > 0);
+        $this->assertTrue($crawler->filter('html:contains("Favorites Tweets")')->count() > 0);
     }
 
     public function testArchiveAction()
@@ -44,5 +44,14 @@ class DefaultControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/client/TweetDeck');
 
         $this->assertTrue($crawler->filter('html:contains("Tweets from TweetDeck")')->count() > 0);
+    }
+
+    public function testFollowersAction()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/followers');
+
+        $this->assertTrue($crawler->filter('html:contains("Followers")')->count() > 0);
     }
 }
