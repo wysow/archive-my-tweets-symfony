@@ -1,0 +1,18 @@
+{% if pageCount > 1 %}
+<div class="amt-pagination">
+    <ul class="pager">
+        {% if previous is defined %}
+            <li class="previous">
+                <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&larr; Previous Followers</a>
+            </li>
+        {% endif %}
+
+        {% if next is defined %}
+            <li class="next">
+                <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">Next Followers &rarr;</a>
+            </li>
+        {% endif %}
+    </ul>
+    <div class="pages">Page {{ current }} of {{ pageCount }}</div>
+</div>
+{% endif %}

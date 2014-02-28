@@ -1,5 +1,5 @@
 {% extends 'WysowArchiveMyTweetsBundle::layout.html.twig' %}
-{% block title %}@{{ twitter.username }} {{ twitter.name }} - Tweets{% endblock %}
+{% block title %}@{{ twitter.username }} {{ twitter.name }} - Followers{% endblock %}
 
 {% block body %}
 <body class="amt-recent">
@@ -10,13 +10,14 @@
 		<div class="row">
 			<div class="span8">
 				<div id="tweets" class="rounded">
-					<div class="page-header"><h1>Favorites Tweets</h1></div>
-					{% include 'WysowArchiveMyTweetsBundle:Default:list.html.twig' with { 'pagination': pagination } %}
+					<div class="page-header"><h1>{% if searchTerm %}Search <small>{{ searchTerm }}</small>{% else %}Followers{% endif %}</h1></div>
+					{% include 'WysowArchiveMyTweetsBundle:Default:followersList.html.twig' with { 'pagination': pagination } %}
+
 				</div><!-- /tweets -->
 			</div><!-- /span8 -->
 
 			<div class="span4">
-				{% include 'WysowArchiveMyTweetsBundle::sidebar.html.twig' with { 'total': total, 'totalFavorited': totalFavorited, 'tweetsByMonths': tweetsByMonths } %}
+				{% include 'WysowArchiveMyTweetsBundle::sidebar.html.twig' with { 'total': total, 'totalFavorited': totalFavorited, 'tweetsByMonths': tweetsByMonths, 'totalClients': totalClients, 'clients': clients, 'totalFollowers': totalFollowers } %}
 			</div><!-- /.span4 -->
 
 <!-- /index -->

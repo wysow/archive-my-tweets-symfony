@@ -38,6 +38,8 @@ body {
 }
 
 #tweets .tweet {
+	width: 90%;
+	min-height: 50px;
 	margin-bottom: 15px;
 	padding: 0 30px 10px 30px;
 	border-bottom: 1px solid #eee;
@@ -57,6 +59,15 @@ body {
 	padding: 0 30px;
 }
 
+/*-- followers ------------------------------------------------ */
+
+#tweets .follower {
+	width: 50%;
+}
+
+#tweets .follower.meta {
+	line-height: 20px;
+}
 
 /*-- pagination ----------------------------------------------- */
 

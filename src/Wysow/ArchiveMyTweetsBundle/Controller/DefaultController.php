@@ -49,7 +49,8 @@ class DefaultController extends Controller
             'tweetsByMonths' => $tweetsByMonths,
             'totalClients' => $totalClients,
             'clients' => $clients,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'totalFollowers' => $this->getTotalFollowers(),
         );
     }
 
@@ -82,7 +83,8 @@ class DefaultController extends Controller
             'tweetsByMonths' => $tweetsByMonths,
             'totalClients' => $totalClients,
             'clients' => $clients,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'totalFollowers' => $this->getTotalFollowers(),
         );
     }
 
@@ -120,7 +122,8 @@ class DefaultController extends Controller
             'totalClients' => $totalClients,
             'clients' => $clients,
             'monthYearDate' => $monthYearDate,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'totalFollowers' => $this->getTotalFollowers(),
         );
     }
 
@@ -156,7 +159,46 @@ class DefaultController extends Controller
             'totalClients' => $totalClients,
             'clients' => $clients,
             'clientName' => $client,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'totalFollowers' => $this->getTotalFollowers(),
+        );
+    }
+
+    /**
+     * @Route("/followers")
+     * @Template()
+     */
+    public function followersAction()
+    {
+        $followers = $this
+            ->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Follower')->findAll()
+        ;
+
+        $pagination = $this->getPagination($followers);
+
+        $searchTerm = null;
+
+        $tweetsByMonths = $this->getTweetsByMonths();
+
+        $allTweets = $this->getAllTweets();
+
+        $favorited = $this->getFavoritedTweets();
+
+        list($totalClients, $clients) = $this->getClientsInfo();
+
+        return array(
+            'gravatarEmail' => $this->get('service_container')
+                ->getParameter('wysow_archive_my_tweets.gravatar.email'),
+            'searchTerm' => $searchTerm,
+            'followers' => $followers,
+            'pagination' => $pagination,
+            'total' => count($allTweets),
+            'totalFavorited' => count($favorited),
+            'tweetsByMonths' => $tweetsByMonths,
+            'totalClients' => $totalClients,
+            'clients' => $clients,
+            'totalFollowers' => count($followers),
         );
     }
 
@@ -178,16 +220,21 @@ class DefaultController extends Controller
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->findByFavorited(true);
     }
 
-    private function getPagination($tweets)
+    private function getPagination($objects)
     {
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $tweets,
+            $objects,
             $this->get('request')->query->get('page', 1),
             30
         );
 
-        $pagination->setTemplate('WysowArchiveMyTweetsBundle::pagination.html.twig');
+        if (get_class($objects[0]) == 'Wysow\ArchiveMyTweetsBundle\Entity\Tweet') {
+            $pagination->setTemplate('WysowArchiveMyTweetsBundle::tweetsPagination.html.twig');
+        } else {
+            $pagination->setTemplate('WysowArchiveMyTweetsBundle::followersPagination.html.twig');
+        }
+
 
         return $pagination;
     }
@@ -201,5 +248,15 @@ class DefaultController extends Controller
             ->getRepository('WysowArchiveMyTweetsBundle:Tweet')->getClients();
 
         return array($totalClients, $clients);
+    }
+
+    private function getTotalFollowers()
+    {
+        $followers = $this
+            ->getDoctrine()
+            ->getRepository('WysowArchiveMyTweetsBundle:Follower')->findAll()
+        ;
+
+        return count($followers);
     }
 }

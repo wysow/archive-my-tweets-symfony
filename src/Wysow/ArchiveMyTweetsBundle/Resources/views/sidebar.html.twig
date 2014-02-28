@@ -2,6 +2,9 @@
         app.request.attributes.get('_route_params')) %}
 <div id="sidebar">
 
+	<div id="followers" class="widget rounded">
+		<h3><a href="{{ path('wysow_archivemytweets_default_followers') }}">Followers</a> <div class="pull-right muted">{{ totalFollowers }}</div></h3>
+	</div>
 	<div id="archive" class="widget rounded">
 		<ul class="links">
 			<li class="all-tweets {% if currentPath == path('wysow_archivemytweets_default_index') %}here{% endif %}">

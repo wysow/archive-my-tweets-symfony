@@ -1,0 +1,30 @@
+{% if pagination %}
+    {% for follower in pagination %}
+        <div class="tweet">
+            <div class="pull-left follower">
+                {% if follower.following %}
+                    <span class="badge badge-warning"><i class="icon-star icon-white" title="Following each other"></i></span>
+                {% endif %}
+                <img src="{{ follower.profileImageUrl }}">
+                {{ follower.name }}
+            </div>
+            <div class="pull-right follower meta">
+                {% if follower.location is not null %}
+                    <a href="https://maps.google.com/?q={{ follower.location }}" target="_blank">{{ follower.location }}</a>
+                    <br />
+                {% endif %}
+                {% if follower.url is not null %}
+                    <a href="{{ follower.url|raw }}" target="_blank">{{ follower.url }}</a>
+                    <br />
+                {% endif %}
+                <a href="https://twitter.com/{{ follower.screenName }}" target="_blank">{{ follower.screenName }}</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div id="pagination">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% else %}
+    <p class="no-tweets lead">No followers found!</p>
+{% endif %}

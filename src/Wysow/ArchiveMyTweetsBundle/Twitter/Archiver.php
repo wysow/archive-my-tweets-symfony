@@ -4,6 +4,7 @@ namespace Wysow\ArchiveMyTweetsBundle\Twitter;
 
 use TijsVerkoyen\Twitter\Twitter as TwitterBase;
 use Wysow\ArchiveMyTweetsBundle\Entity\Tweet;
+use Wysow\ArchiveMyTweetsBundle\Entity\Follower;
 use Doctrine\ORM\EntityManager;
 
 class Archiver {
@@ -209,6 +210,107 @@ class Archiver {
         }
 
         $str .= $apiCalls . ' API calls, ' . $tweetsFound . ' favorites tweets found, '.$numAdded.' favorites tweets saved' . "\n";
+
+        return $str;
+    }
+
+    public function archiveFollowers()
+    {
+        // this should use a maximum of 16 API calls if the user has 3200+ tweets
+
+        // api params
+        $maxId              = null;
+        $sinceId            = null;
+        $userId             = null; // not needed if using screen name
+        $screenName         = $this->username;
+        $count              = 200;
+        $trimUser           = null;
+        $excludeReplies     = false;
+        $contributorDetails = true;
+        $includeRts         = true;
+        $includeEntities    = false;
+        $skipStatus         = true;
+
+        // loop variables
+        $str               = '';
+        $cursor            = -1;
+        $gotResults        = true;
+        $apiCalls          = 0;
+        $followersFound    = 0;
+        $numAdded          = 0;
+        $exceptionCount    = 0;
+        $numFollowersAdded = 0;
+        $numExceptions     = 0;
+        $maxExceptions     = 25; // don't get stuck in the loop if twitter is down
+
+        $numberOfFollowers = count($this->em->getRepository('WysowArchiveMyTweetsBundle:Follower')->findAll());
+
+        while ($gotResults) {
+            try {
+                $followersResult = $this->twitter->followersList($userId, $screenName, $cursor, $includeEntities, $skipStatus);
+                $apiCalls++;
+
+                $numResults = count($followersResult['users']);
+                $followersFound += $numResults;
+
+                if ($numResults == 0) {
+                    $str .= 'NO followers on page ' . $apiCalls . ", exiting.\n";
+                    $difference = abs($numberOfFollowers - $followersFound);
+                    if ($numberOfFollowers > $followersFound) {
+                        $str .= $difference . ' follower(s) LOST.' . "\n";
+                    } else {
+                        $str .= $difference . ' follower(s) ADDED.' . "\n";
+                    }
+                    $gotResults = false;
+                } else {
+                    $newestFollower = $followersResult['users'][0];
+                    $oldestFollower = end($followersResult['users']);
+
+                    $str .= $numResults . ' followers on page ' . $apiCalls . " (oldest: ".$oldestFollower['id'].", newest: ".$newestFollower['id'].")\n";
+
+                    $cursor = $followersResult['next_cursor'];
+
+                    foreach ($followersResult['users'] as $f) {
+                        $follower = new Follower();
+                        $follower->loadArray($f);
+                        $this->em->merge($follower);
+                    }
+
+                    if ($numResults === false) {
+                        $str .= 'ERROR INSERTING FOLLOWERS INTO DATABASE';
+                    } else if ($numResults == 0) {
+                        $str .= 'Zero followers added.' . "\n";
+                    } else {
+                        $str .= $numResults . ' followers added.' . "\n";
+                        $numAdded += $numResults;
+                    }
+                }
+
+                // check if we've reached the rate limit
+                $rate = $this->twitter->applicationRateLimitStatus();
+                if(isset($rate['remaining']) && isset($rate['limit'])) {
+                    $str .= $rate['remaining'] . '/' . $rate['limit'] . "\n";
+                    if ($rate['remaining'] <= 0) {
+                        $str .= 'API limit reached. Try again later.' . "\n";
+                        $gotResults = false;
+                    }
+                }
+            } catch (\Exception $e) {
+                $str .= 'Exception: ' . $e->getMessage() . "\n";
+
+                $numExceptions++;
+
+                // break out to avoid infinite looping while twitter is down
+                if ($numExceptions >= $maxExceptions) {
+                    $str .= 'Too many connection errors. Twitter may be down. Try again later.' . "\n";
+                    $gotResults = false;
+                }
+            }
+        }
+
+        $this->em->flush();
+
+        $str .= $apiCalls . ' API calls, ' . $followersFound . ' followers found, '. $numAdded .' followers saved' . "\n";
 
         return $str;
     }
