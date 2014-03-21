@@ -37,7 +37,6 @@
         "tijsverkoyen/twitteroauth": "dev-master",
         "knplabs/knp-paginator-bundle": "2.4.0",
         "ekino/newrelic-bundle": "1.2.1",
-        "symfony/icu": "1.1.*",
         "snc/redis-bundle": "1.1.*"
     },
     "scripts": {
