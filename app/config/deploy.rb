@@ -21,14 +21,11 @@ set :deploy_via, :remote_cache
 
 set :ssh_options, {:forward_agent => true}
 
+set   :use_sudo,      false
+
 set :shared_files,      ["app/config/parameters.yml"]
 
 set :shared_children,     [app_path + "/logs", web_path + "/uploads", "vendor"]
-
-set :writable_dirs,       [app_path + "/cache", app_path = "/logs"]
-set :webserver_user,      "www-data"
-set :permission_method,   :acl
-set :use_set_permissions, true
 
 set :use_composer, true
 
@@ -37,6 +34,6 @@ set :composer_options,  "--no-dev --verbose --prefer-dist --optimize-autoloader"
 set :copy_vendors, true
 
 # Be more verbose by uncommenting the following line
-logger.level = Logger::MAX_LEVEL
+# logger.level = Logger::MAX_LEVEL
 
 after "deploy", "deploy:cleanup"
