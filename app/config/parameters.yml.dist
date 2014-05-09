@@ -21,6 +21,7 @@ parameters:
     twitter_oauth_token: ~
     twitter_oauth_secret: ~
     gravatar_email: ~
+    newrelic_appname: ~
     newrelic_apikey: ~
     redis_dsn_default: ~
     redis_dsn_cache: ~

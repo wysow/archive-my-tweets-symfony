@@ -76,8 +76,8 @@ wysow_archive_my_tweets:
         email: %gravatar_email%
 
 ekino_new_relic:
-    application_name: "pagoda archive-my-tweets-wysow-fr web1" # (mandatory, default value in newrelic is PHP Application)
-    api_key: %newrelic_apikey%                                 # New Relic API
+    application_name: %newrelic_appname%
+    api_key: %newrelic_apikey%
 
 snc_redis:
     clients:
